@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { Button } from '@mui/material';
+import { Box, Button, Typography, AppBar } from '@mui/material';
 import mockData from '../../services/mockAPI';
 import RestaurantList from '../../components/RestaurantList';
 import ModalWrapper from '../../components/ModalWrapper';
 import RestaurantForm from '../../components/RestaurantForm';
+import "./index.css"
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 
 const AdminDashboard = () => {
-  console.log("mock", mockData)
   const [restaurants, setRestaurants] = useState(mockData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingRestaurant, setEditingRestaurant] = useState(null);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [restId,setRestId] = useState(null);
 
   const handleAddRestaurant = () => {
     setEditingRestaurant(null);
@@ -18,8 +21,8 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteRestaurant = (id) => {
-    const updatedRestaurants = restaurants.filter(restaurant => restaurant.id !== id);
-    setRestaurants(updatedRestaurants);
+    setRestId(id)
+    setConfirmationOpen(true);
   };
 
   const handleEditRestaurant = (restaurant) => {
@@ -42,15 +45,58 @@ const AdminDashboard = () => {
     setIsModalOpen(false);
   };
 
+  const handleConfirmDelete = () => {
+    const updatedRestaurants = restaurants.filter(restaurant => restaurant.id !== restId);
+    setRestaurants(updatedRestaurants);
+    setConfirmationOpen(false);
+  };
+
   return (
     <>
-      <Button variant="contained" onClick={handleAddRestaurant}>
-        Add Restaurant
-      </Button>
-      <RestaurantList restaurants={restaurants} onDelete={handleDeleteRestaurant} onEdit={handleEditRestaurant} />
+      <AppBar
+        sx={{
+          backgroundColor: 'white',
+          color: 'text.primary',
+          boxShadow: 1,
+          zIndex: 1200,
+        }}
+
+      >
+        <Box className="top-header">
+          <Box className="header-left">
+            <Box className="header-logo">
+              FD
+            </Box>
+            <Typography sx={{
+              fontSize: '1rem',
+            }}>
+              Foodie's Delight
+            </Typography>
+          </Box>
+
+          <Button variant="contained" onClick={handleAddRestaurant}>
+            Add Restaurant
+          </Button>
+        </Box>
+      </AppBar>
+
+      <Box sx={{
+        marginTop: "5rem"
+      }}
+        className="restaurant-list"
+      >
+
+        <RestaurantList restaurants={restaurants} onDelete={handleDeleteRestaurant} onEdit={handleEditRestaurant} />
+      </Box>
+
       <ModalWrapper open={isModalOpen} handleClose={() => setIsModalOpen(false)}>
         <RestaurantForm initialData={editingRestaurant} onSubmit={handleSubmitForm} />
       </ModalWrapper>
+      <ConfirmationModal
+        open={confirmationOpen}
+        handleClose={() => setConfirmationOpen(false)}
+        handleConfirm={handleConfirmDelete}
+      />
     </>
   );
 };

@@ -6,9 +6,6 @@ import AdminDashboard from './pages/AdminDashboard';
 function App() {
   return (
     <Router>
-        <Typography variant="h4" component="h1" gutterBottom>
-          FOODIEDELIGHT - Admin Dashboard
-        </Typography>
         <Routes>
           <Route path="/" element={<AdminDashboard />} />
         </Routes>

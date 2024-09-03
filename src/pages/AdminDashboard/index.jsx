@@ -74,7 +74,9 @@ const AdminDashboard = () => {
             </Typography>
           </Box>
 
-          <Button variant="contained" onClick={handleAddRestaurant}>
+          <Button variant="contained" onClick={handleAddRestaurant} sx={{
+            backgroundColor: 'mediumpurple',
+          }}>
             Add Restaurant
           </Button>
         </Box>

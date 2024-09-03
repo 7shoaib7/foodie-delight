@@ -62,7 +62,9 @@ const RestaurantForm = ({ initialData = {}, onSubmit }) => {
         <MenuItem value="Fine Dining">Fine Dining</MenuItem>
         <MenuItem value="Casual Dining">Casual Dining</MenuItem>
       </TextField>
-      <Button type="submit" variant="contained" color="primary">
+      <Button type="submit" variant="contained" sx={{
+        backgroundColor:"mediumpurple"
+      }}>
         Submit
       </Button>
     </form>

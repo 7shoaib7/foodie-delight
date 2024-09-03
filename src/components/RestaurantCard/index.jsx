@@ -1,9 +1,10 @@
 import React from "react";
 import { Card, CardContent, Typography, Button, CardActions } from "@mui/material";
+import "./index.css"
 
 const RestaurantCard = ({ restaurant, onDelete, onEdit }) => {
   return (
-    <Card>
+    <Card className="restaurant-card">
       <CardContent>
         <Typography variant="h5">{restaurant.name}</Typography>
         <Typography variant="body2" color="textSecondary">
